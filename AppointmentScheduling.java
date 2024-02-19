@@ -1,81 +1,135 @@
-import java.util.PriorityQueue;
-
 class Appointment {
-    String patientName;
-    String scheduledTime;
+    String name;
+    String scheduledDate; // Assuming scheduled date is represented as string
+    String scheduledTime; // Assuming scheduled time is represented as string
 
-    // Constructor
-    public Appointment(String patientName, String scheduledTime) {
-        this.patientName = patientName;
+    public Appointment(String name, String scheduledDate, String scheduledTime) {
+        this.name = name;
+        this.scheduledDate = scheduledDate;
         this.scheduledTime = scheduledTime;
     }
 }
 
-class AppointmentScheduler {
-    PriorityQueue<Appointment> minHeap;
+class MinHeap {
+    private final int MAX_SIZE = 100; // Maximum size of the heap
+    private Appointment[] heap;
+    private int size;
 
-    // Constructor
-    public AppointmentScheduler() {
-        minHeap = new PriorityQueue<>((a1, a2) -> a1.scheduledTime.compareTo(a2.scheduledTime));
+    public MinHeap() {
+        heap = new Appointment[MAX_SIZE];
+        size = 0;
     }
 
-    // Schedule a new appointment
-    public void scheduleAppointment(String patientName, String scheduledTime) {
-        Appointment newAppointment = new Appointment(patientName, scheduledTime);
-        minHeap.offer(newAppointment);
+    private int parent(int pos) {
+        return (pos - 1) / 2;
     }
 
-    
-    // Cancel an appointment
-    public void cancelAppointment(String patientName, String scheduledTime) {
-        Appointment canceledAppointment = new Appointment(patientName, scheduledTime);
-        minHeap.removeIf(appointment -> appointment.patientName.equals(patientName) && appointment.scheduledTime.equals(scheduledTime));
+    private int leftChild(int pos) {
+        return (2 * pos) + 1;
     }
 
-    // Display all appointments
-    public void printAllAppointments() {
-        if (minHeap.isEmpty()) {
-            System.out.println("No appointments scheduled.");
+    private int rightChild(int pos) {
+        return (2 * pos) + 2;
+    }
+
+    private void swap(int fpos, int spos) {
+        Appointment tmp;
+        tmp = heap[fpos];
+        heap[fpos] = heap[spos];
+        heap[spos] = tmp;
+    }
+
+    private boolean isEarlier(String date1, String time1, String date2, String time2) {
+        if (date1.compareTo(date2) < 0) {
+            return true;
+        } else if (date1.compareTo(date2) == 0) {
+            return time1.compareTo(time2) < 0;
+        }
+        return false;
+    }
+
+    private void minHeapify(int pos) {
+        int left = leftChild(pos);
+        int right = rightChild(pos);
+        int smallest = pos;
+
+        if (left < size && isEarlier(heap[left].scheduledDate, heap[left].scheduledTime, heap[pos].scheduledDate, heap[pos].scheduledTime))
+            smallest = left;
+
+        if (right < size && isEarlier(heap[right].scheduledDate, heap[right].scheduledTime, heap[smallest].scheduledDate, heap[smallest].scheduledTime))
+            smallest = right;
+
+        if (smallest != pos) {
+            swap(pos, smallest);
+            minHeapify(smallest);
+        }
+    }
+
+    public void insert(Appointment newAppointment) {
+        if (size >= MAX_SIZE) {
+            System.out.println("Heap is full. Cannot insert more elements.");
             return;
         }
 
-        PriorityQueue<Appointment> tempHeap = new PriorityQueue<>(minHeap);
-        System.out.println("All Appointments:");
-        while (!tempHeap.isEmpty()) {
-            Appointment appointment = tempHeap.poll();
-            System.out.println("Patient: " + appointment.patientName + ", Scheduled Time: " + appointment.scheduledTime);
+        size++;
+        int current = size - 1;
+        heap[current] = newAppointment;
+
+        while (current != 0 && isEarlier(heap[current].scheduledDate, heap[current].scheduledTime, heap[parent(current)].scheduledDate, heap[parent(current)].scheduledTime)) {
+            swap(current, parent(current));
+            current = parent(current);
         }
     }
 
+    public Appointment getMin() {
+        if (size == 0)
+            return null;
+        return heap[0];
+    }
 
+    public void removeMin() {
+        if (size == 0)
+            return;
 
-    // Retrieve and display the next appointment
-    public void getNextAppointment() {
-        if (!minHeap.isEmpty()) {
-            Appointment nextAppointment = minHeap.peek();
-            System.out.println("Next Appointment:");
-            System.out.println("Patient: " + nextAppointment.patientName);
-            System.out.println("Scheduled Time: " + nextAppointment.scheduledTime);
-        } else {
-            System.out.println("No upcoming appointments.");
-        }
+        heap[0] = heap[size - 1];
+        size--;
+        minHeapify(0);
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 }
 
+
 public class AppointmentScheduling {
     public static void main(String[] args) {
-        AppointmentScheduler scheduler = new AppointmentScheduler();
+        // Creating a MinHeap instance
+        MinHeap minHeap = new MinHeap();
 
-        // Schedule appointments
-        scheduler.scheduleAppointment("John Doe", "2024-02-20 10:00 AM");
-        scheduler.scheduleAppointment("Jane Smith", "2024-02-20 11:30 AM");
+        // Scheduling some appointments with date and time
+        minHeap.insert(new Appointment("Sarath Kumara", "2024-02-21", "10:00"));
+        minHeap.insert(new Appointment("Ravindu perera", "2024-02-10", "15:30"));
+        minHeap.insert(new Appointment("Sakith ransana", "2024-02-21", "08:45"));
+        minHeap.insert(new Appointment("Akila Nirmal", "2024-02-22", "12:15"));
+        
+        minHeap.removeMin();
+        // Retrieving and displaying the upcoming appointments
+        System.out.println("Next Appointment: " + minHeap.getMin().name + " at " +
+                minHeap.getMin().scheduledDate + " " + minHeap.getMin().scheduledTime+"\n");
 
-        // Display the next appointment
-        scheduler.getNextAppointment();
+        
 
-        // Cancel an appointment
-        scheduler.cancelAppointment("John Doe", "2024-02-20 10:00 AM");
-
-        scheduler.printAllAppointments();
+        System.out.println("Upcoming Appointments:");
+        while (!minHeap.isEmpty()) {
+            Appointment nextAppointment = minHeap.getMin();
+            System.out.println(nextAppointment.name + " has appointment at " +
+                    nextAppointment.scheduledDate + " " + nextAppointment.scheduledTime);
+            minHeap.removeMin();
+        }
     }
 }

@@ -25,12 +25,28 @@ class AppointmentScheduler {
         minHeap.offer(newAppointment);
     }
 
-    // Cancel an appointment
+    
     // Cancel an appointment
     public void cancelAppointment(String patientName, String scheduledTime) {
         Appointment canceledAppointment = new Appointment(patientName, scheduledTime);
         minHeap.removeIf(appointment -> appointment.patientName.equals(patientName) && appointment.scheduledTime.equals(scheduledTime));
     }
+
+    // Display all appointments
+    public void printAllAppointments() {
+        if (minHeap.isEmpty()) {
+            System.out.println("No appointments scheduled.");
+            return;
+        }
+
+        PriorityQueue<Appointment> tempHeap = new PriorityQueue<>(minHeap);
+        System.out.println("All Appointments:");
+        while (!tempHeap.isEmpty()) {
+            Appointment appointment = tempHeap.poll();
+            System.out.println("Patient: " + appointment.patientName + ", Scheduled Time: " + appointment.scheduledTime);
+        }
+    }
+
 
 
     // Retrieve and display the next appointment
@@ -60,7 +76,6 @@ public class AppointmentScheduling {
         // Cancel an appointment
         scheduler.cancelAppointment("John Doe", "2024-02-20 10:00 AM");
 
-        // Display the next appointment after cancellation
-        scheduler.getNextAppointment();
+        scheduler.printAllAppointments();
     }
 }

@@ -90,7 +90,7 @@ class MinHeap {
     public void removeMin() {
         if (size == 0)
             return;
-    }
+    
             
 
         heap[0] = heap[size - 1];

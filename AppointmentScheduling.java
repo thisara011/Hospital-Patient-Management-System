@@ -57,6 +57,7 @@ public class AppointmentScheduling {
 
         // Display the next appointment
         scheduler.getNextAppointment();
+        scheduler.getNextAppointment();
 
         // Cancel an appointment
         scheduler.cancelAppointment("John Doe", "2024-02-20 10:00 AM");

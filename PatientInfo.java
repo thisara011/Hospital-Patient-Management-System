@@ -86,7 +86,7 @@ class PatientList {
     }
 }
 
-public class PIM {
+public class PatientInfo {
     public static void main(String[] args) {
         PatientList patientList = new PatientList();
 

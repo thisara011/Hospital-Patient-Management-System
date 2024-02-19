@@ -53,6 +53,7 @@ public class AppointmentScheduling {
         // Schedule appointments
         scheduler.scheduleAppointment("John Doe", "2024-02-20 10:00 AM");
         scheduler.scheduleAppointment("Jane Smith", "2024-02-20 11:30 AM");
+        scheduler.scheduleAppointment("Anura kuamara", "2024-02-20 10:30 AM");
 
         // Display the next appointment
         scheduler.getNextAppointment();

@@ -76,11 +76,12 @@ class PatientList {
     public void displayPatients() {
         Node current = head;
         while (current != null) {
-            System.out.println("Name: " + current.patient.name +
-                               ", Age: " + current.patient.age +
-                               ", Gender: " + current.patient.gender +
-                               ", Contact: " + current.patient.contact +
-                               ", Medical History: " + current.patient.medicalHistory);
+            System.out.println("Name: " + current.patient.name);
+            System.out.println("Age: " + current.patient.age);
+            System.out.println("Gender: " + current.patient.gender);
+            System.out.println("Contact: " + current.patient.contact);
+            System.out.println("Medical History: " + current.patient.medicalHistory);
+            System.out.println();
             current = current.next;
         }
     }
@@ -91,18 +92,22 @@ public class PatientInfo {
         PatientList patientList = new PatientList();
 
         // Inserting patients
-        patientList.insertPatient(new Patient("John Doe", 30, "Male", "123456789", "None"));
-        patientList.insertPatient(new Patient("Jane Smith", 25, "Female", "987654321", "Allergies"));
-
+        patientList.insertPatient(new Patient("Amal Perera", 30, "Male", "123456789", "No medical History"));
+        System.out.println();
+        System.out.println();
+        patientList.insertPatient(new Patient("Gawuru Madhubashani", 25, "Female", "987654321", "Allergies"));
+        System.out.println();
         // Displaying patients
         System.out.println("Patients before deletion:");
         patientList.displayPatients();
+        System.out.println();
 
         // Deleting a patient
         patientList.deletePatient("John Doe");
-
+        System.out.println();
         // Displaying patients after deletion
         System.out.println("\nPatients after deletion:");
         patientList.displayPatients();
+        System.out.println();
     }
 }

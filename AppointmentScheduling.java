@@ -26,10 +26,12 @@ class AppointmentScheduler {
     }
 
     // Cancel an appointment
+    // Cancel an appointment
     public void cancelAppointment(String patientName, String scheduledTime) {
         Appointment canceledAppointment = new Appointment(patientName, scheduledTime);
-        minHeap.remove(canceledAppointment);
+        minHeap.removeIf(appointment -> appointment.patientName.equals(patientName) && appointment.scheduledTime.equals(scheduledTime));
     }
+
 
     // Retrieve and display the next appointment
     public void getNextAppointment() {

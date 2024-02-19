@@ -91,6 +91,16 @@ class MinHeap {
         if (size == 0)
             return;
 
+        heap[0] = heap[size - 1];
+        size--;
+        minHeapify(0);
+    }
+
+    public int getSize() {
+        return size;
+    }
+            
+
 
 
     public boolean isEmpty() {

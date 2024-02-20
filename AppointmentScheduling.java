@@ -1,3 +1,7 @@
+import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 class Appointment {
     String name;
     String scheduledDate; // Assuming scheduled date is represented as string
@@ -12,8 +16,20 @@ class Appointment {
 
 class MinHeap {
     private final int MAX_SIZE = 100; // Maximum size of the heap
-    private Appointment[] heap;
+    public Appointment[] heap;
     private int size;
+
+    public boolean remove(String name) {
+        for (int i = 0; i < size; i++) {
+            if (heap[i].name.equalsIgnoreCase(name)) {
+                heap[i] = heap[size - 1];
+                size--;
+                minHeapify(i);
+                return true;
+            }
+        }
+        return false;
+    }
 
     public MinHeap() {
         heap = new Appointment[MAX_SIZE];
@@ -48,7 +64,7 @@ class MinHeap {
         return false;
     }
 
-    private void minHeapify(int pos) {
+    public void minHeapify(int pos) {
         int left = leftChild(pos);
         int right = rightChild(pos);
         int smallest = pos;
@@ -99,9 +115,6 @@ class MinHeap {
     public int getSize() {
         return size;
     }
-            
-
-
 
     public boolean isEmpty() {
         return size == 0;
@@ -109,31 +122,85 @@ class MinHeap {
 }
 
 
+
+
+
+
+
 public class AppointmentScheduling {
     public static void main(String[] args) {
         // Creating a MinHeap instance
         MinHeap minHeap = new MinHeap();
+        Scanner scanner = new Scanner(System.in);
 
         // Scheduling some appointments with date and time
-        minHeap.insert(new Appointment("Sarath Kumara", "2024-02-21", "10:00"));
-        minHeap.insert(new Appointment("Ravindu perera", "2024-02-10", "15:30"));
-        minHeap.insert(new Appointment("Sakith ransana", "2024-02-21", "08:45"));
-        minHeap.insert(new Appointment("Akila Nirmal", "2024-02-22", "12:15"));
-        
-        minHeap.removeMin();
-        // Retrieving and displaying the upcoming appointments
-        System.out.println("Next Appointment: " + minHeap.getMin().name + " at " +
-                minHeap.getMin().scheduledDate + " " + minHeap.getMin().scheduledTime+"\n");
+        System.out.println("Enter\n'1' to input a new appointment\n'2' to remove an appointment \n'3' to see upcoming appointment \n'4' to stop:");
 
-        
+        while (true) {
+            System.out.print("\nCommand: ");
+            String command = scanner.nextLine();
 
-        System.out.println("Upcoming Appointments:");
-        while (!minHeap.isEmpty()) {
-            Appointment nextAppointment = minHeap.getMin();
-            System.out.println(nextAppointment.name + " has appointment at " +
-                    nextAppointment.scheduledDate + " " + nextAppointment.scheduledTime);
-            minHeap.removeMin();
+            if (command.equalsIgnoreCase("4")) {
+                break;
+            } else if (command.equalsIgnoreCase("1")) {
+                System.out.print("Name: ");
+                String name = scanner.nextLine();
+
+                System.out.print("Scheduled Date (yyyy-MM-dd): ");
+                String scheduledDate = scanner.nextLine();
+
+                System.out.print("Scheduled Time (HH:mm): ");
+                String scheduledTime = scanner.nextLine();
+
+                minHeap.insert(new Appointment(name, scheduledDate, scheduledTime));
+            } else if (command.equalsIgnoreCase("2")) {
+                System.out.print("Enter the name of the appointment to delete: ");
+                String appointmentName = scanner.nextLine();
+                
+                // Remove the appointment with the given name
+                boolean removed = minHeap.remove(appointmentName);
+                if (removed) {
+                    System.out.println("Appointment '" + appointmentName + "' deleted successfully.");
+                } else {
+                    System.out.println("Appointment '" + appointmentName + "' not found.");
+                }
+            } else if (command.equalsIgnoreCase("3")) {
+                // View upcoming appointments
+                // Display the next appointment from the current time
+                LocalDateTime currentTime = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                String formattedCurrentTime = currentTime.format(formatter);
+
+                // Update the MinHeap before viewing
+                minHeap.minHeapify(0);
+
+                boolean upcomingDisplayed = false;
+
+                for (int i = 0; i < minHeap.getSize(); i++) {
+                    Appointment nextAppointment = minHeap.heap[i];
+                    String scheduledDateTime = nextAppointment.scheduledDate + " " + nextAppointment.scheduledTime;
+                    if (scheduledDateTime.compareTo(formattedCurrentTime) > 0) {
+                        System.out.println("Next Appointment: " + nextAppointment.name + " at " + scheduledDateTime+"\n");
+                        upcomingDisplayed = true;
+                        break;
+                    }
+                }
+
+                if (!upcomingDisplayed) {
+                    System.out.println("No upcoming appointments.");
+                } else {
+                    System.out.println("Upcoming Appointments:");
+                    for (int i = 0; i < minHeap.getSize(); i++) {
+                        Appointment nextAppointment = minHeap.heap[i];
+                        System.out.println(nextAppointment.name + " has appointment at " +
+                                nextAppointment.scheduledDate + " " + nextAppointment.scheduledTime);
+                    }
+                }
+            } else {
+                System.out.println("Invalid command. Please enter 'add', 'delete', 'view', or 'exit'.");
+            }
         }
+
+        scanner.close();
     }
 }
-

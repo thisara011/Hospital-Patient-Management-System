@@ -202,7 +202,7 @@ class PatientList {
 
 // Main class for running the patient information management system
 public class PatientInfo {
-    public static void main(String[] args) {
+    public static void PatientInfoManagement() {
         PatientList patientList = new PatientList(); // Create a new patient list
         Scanner scanner = new Scanner(System.in); // Scanner for user input
 

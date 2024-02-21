@@ -1,3 +1,4 @@
+package appointmentsch;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -137,7 +138,7 @@ class MinHeap {
 }
 
 public class Appointmentsch {
-    public static void main(String[] args) {
+    public static void PatientAppoimentManagment() {
         MinHeap minHeap = new MinHeap();
         Scanner scanner = new Scanner(System.in);
 

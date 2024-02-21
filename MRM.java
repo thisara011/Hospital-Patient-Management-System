@@ -10,7 +10,8 @@ class MedicalRecord {
     String prescription;
 
     // Constructor
-    public MedicalRecord(String timestamp, String patientName, String doctorName, String diagnosis, String prescription) {
+    public MedicalRecord(String timestamp, String patientName, String doctorName, String diagnosis,
+            String prescription) {
         this.timestamp = timestamp;
         this.patientName = patientName;
         this.doctorName = doctorName;
@@ -66,7 +67,8 @@ class MedicalRecordBST {
         root = updateRec(root, patientName, newDoctorName, newDiagnosis, newPrescription);
     }
 
-    private Node updateRec(Node root, String patientName, String newDoctorName, String newDiagnosis, String newPrescription) {
+    private Node updateRec(Node root, String patientName, String newDoctorName, String newDiagnosis,
+            String newPrescription) {
         if (root == null) {
             return null; // Record not found
         }
@@ -191,7 +193,8 @@ public class MRM {
             switch (choice) {
                 case 1:
                     // Accepting user input for adding medical records
-                    System.out.println("\nEnter Medical Record details (Timestamp, Patient, Doctor, Diagnosis, Prescription):");
+                    System.out.println(
+                            "\nEnter Medical Record details (Timestamp, Patient, Doctor, Diagnosis, Prescription):");
                     System.out.print("Timestamp: ");
                     String timestamp = scanner.nextLine();
                     System.out.print("Patient: ");

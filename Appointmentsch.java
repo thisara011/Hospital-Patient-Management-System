@@ -1,4 +1,4 @@
-package appointmentsch;
+
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -147,7 +147,8 @@ public class Appointmentsch {
             System.out.println("1. Add Appointment");
             System.out.println("2. View Appointments");
             System.out.println("3. Remove Appointment");
-            System.out.println("4. Exit");
+            System.out.println("4. main menu");
+            System.out.println("5. exit");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -211,11 +212,16 @@ public class Appointmentsch {
                     break;
 
                 case 4:
+                    
+                    Main main = new Main();
+                    main.main();    
+                    break;
+
+                    case 5:
                     System.out.println("Exiting...");
                     scanner.close();
                     System.exit(0);
                     break;
-
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 4.");
             }

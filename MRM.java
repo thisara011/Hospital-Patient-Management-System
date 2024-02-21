@@ -1,4 +1,4 @@
-package medicalrecord;
+
 import java.util.Scanner;
 //import java.util.ArrayList;
 //import java.util.List;
@@ -188,7 +188,8 @@ public class MRM {
         System.out.println("4. Search Medical Record by Patient Name");
         System.out.println("5. Display All Medical Records");
         System.out.println("6. Delete Medical Record by Patient Name");
-        System.out.println("7. Exit");
+        System.out.println("7. main menu");
+        System.out.println("8. exit");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
         scanner.nextLine(); // Consume newline
@@ -278,11 +279,16 @@ public class MRM {
                 break;
 
             case 7:
+                // Enter main menu
+                Main main = new Main();
+                main.main();
+                break;
+
+                case 8:
                 // Exiting the program
                 System.out.println("Exiting the program.");
                 System.exit(0);
                 break;
-
             default:
                 System.out.println("Invalid choice. Please enter a valid option.");
                 scanner.close();

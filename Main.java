@@ -1,16 +1,15 @@
 import java.util.Scanner;
-import patientinfo.PatientInfo;
-import medicalrecord.MRM;
-import appointmentsch.Appointmentsch;
 
 public class Main {
-    public static void main(String[] args) {
+
+    public  void main() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter your job number:");
         System.out.println("1. Patient Information Management");
         System.out.println("2. Medical Report Management");
         System.out.println("3. Patient Appointment Management");
+        System.out.println("4. Exit");
 
         int choice = scanner.nextInt();
 
@@ -25,6 +24,11 @@ public class Main {
             case 3:
                 Appointmentsch.PatientAppoimentManagment();
                 break;
+                case 4:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    System.exit(0);
+                    break;
             default:
                 System.out.println("Invalid choice. Please enter a valid option.");
         }

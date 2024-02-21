@@ -219,7 +219,7 @@ public class PatientInfo {
                 System.out.println("7. Search Patient by Contact");
                 System.out.println("8. Display All Patients");
                 System.out.println("9. main menu");
-                System.out.println("9. exit");
+                System.out.println("10. exit");
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
@@ -307,7 +307,8 @@ public class PatientInfo {
                         Main main = new Main();
                         main.main();
                         break;
-                        case 10:
+                        
+                    case 10:
                         // Exiting the program
                         System.out.println("Exiting the program.");
                         scanner.close();

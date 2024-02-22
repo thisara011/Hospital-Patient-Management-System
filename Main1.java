@@ -4,3 +4,4 @@ public class Main1 {
         main.main();
     }
 }
+//This is the main class of the project. This is used to run the project. 

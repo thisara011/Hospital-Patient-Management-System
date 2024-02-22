@@ -1,3 +1,4 @@
+package billing;
 import java.util.Scanner;
 
 class BillingInfo {
@@ -86,7 +87,7 @@ class BillingLinkedList {
 }
 
 public class billing {
-    public static void main(String[] args) {
+    public static void Billing() {
         BillingLinkedList billingList = new BillingLinkedList();
         Scanner scanner = new Scanner(System.in);
 

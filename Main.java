@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-import billing.billing;
-
 public class Main {
 
     public  void main() {

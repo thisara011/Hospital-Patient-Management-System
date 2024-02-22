@@ -1,4 +1,4 @@
-package billing;
+
 import java.util.Scanner;
 
 class BillingInfo {
@@ -114,6 +114,10 @@ public class billing {
             int paymentBillID = scanner.nextInt();
             billingList.trackPayment(paymentBillID);
         }
+        else{
+            Main main = new Main();
+            main.main();   
+        }
 
         // Get user input for updating billing information
         System.out.print("Do you want to update billing information? (YES/NO): ");
@@ -128,6 +132,12 @@ public class billing {
             scanner.nextLine(); // Consume the newline character
 
             billingList.updateBillingInfo(updateBillID, newAmount);
+            Main main = new Main();
+            main.main();   
+        }
+        else{
+            Main main = new Main();
+            main.main();   
         }
 
         // Display updated billing information

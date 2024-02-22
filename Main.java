@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import billing.billing;
+
 public class Main {
 
     public  void main() {
@@ -9,7 +11,8 @@ public class Main {
         System.out.println("1. Patient Information Management");
         System.out.println("2. Medical Report Management");
         System.out.println("3. Patient Appointment Management");
-        System.out.println("4. Exit");
+        System.out.println("4. Billing and Payment Processing");
+        System.out.println("5. Exit");
 
         int choice = scanner.nextInt();
 
@@ -25,6 +28,9 @@ public class Main {
                 Appointmentsch.PatientAppoimentManagment();
                 break;
                 case 4:
+                billing.Billing();
+                break;
+                case 5:
                     System.out.println("Exiting...");
                     scanner.close();
                     System.exit(0);

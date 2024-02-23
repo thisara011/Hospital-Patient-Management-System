@@ -176,7 +176,8 @@ public class Appointmentsch {
                     break;
 
                 case 2:  
-                    Appointment firstAppointment = minHeap.viewAppointments();
+                    minHeap.viewAppointments();
+                    Appointment firstAppointment = minHeap.getMin();
                     if (firstAppointment != null) {
                         System.out.println("Next Appointment is to "+firstAppointment.name+" at "+firstAppointment.scheduledDate+" "+firstAppointment.scheduledTime);
                     } else {
@@ -199,7 +200,7 @@ public class Appointmentsch {
                     }
                     if (removed) {
                         System.out.println("Appointment '" + nameToRemove + "' removed successfully.");
-                        Appointment firstAppointmentAfterRemoval = minHeap.viewAppointments();
+                        Appointment firstAppointmentAfterRemoval = minHeap.getMin();
                         if (firstAppointmentAfterRemoval != null) {
                             System.out.println("First Upcoming Appointment: " + firstAppointmentAfterRemoval.name + " has appointment at " +
                                     firstAppointmentAfterRemoval.scheduledDate + " " + firstAppointmentAfterRemoval.scheduledTime);

@@ -25,18 +25,22 @@ class MinHeap {
         size = 0;
     }
 
+    //Method to find the index of parent
     private int parent(int pos) {
         return (pos - 1) / 2;
     }
 
+    //Method to find the index of left child
     private int leftChild(int pos) {
         return (2 * pos) + 1;
     }
 
+    //Method to find the index of right child
     private int rightChild(int pos) {
         return (2 * pos) + 2;
     }
 
+    //Method to swap apppointments to maintain the min heap
     private void swap(int fpos, int spos) {
         Appointment tmp;
         tmp = heap[fpos];
@@ -44,6 +48,7 @@ class MinHeap {
         heap[spos] = tmp;
     }
 
+    //Method to check the newly inserted appointment is earlier to parent appointment
     private boolean isEarlier(String date1, int time1, String date2, int time2) {
         if (date1.compareTo(date2) < 0) {
             return true;
@@ -53,6 +58,8 @@ class MinHeap {
         return false;
     }
 
+
+    //Method to facilitate to maintain of min heap factor 
     public void minHeapify(int pos) {
         int left = leftChild(pos);
         int right = rightChild(pos);
@@ -70,6 +77,7 @@ class MinHeap {
         }
     }
 
+    //Method to insert a new appointment
     public void insert(Appointment newAppointment) {
         if (size >= MAX_SIZE) {
             System.out.println("Heap is full. Cannot insert more elements.");
@@ -86,12 +94,14 @@ class MinHeap {
         }
     }
 
+    //Method to get min value
     public Appointment getMin() {
         if (size == 0)
             return null;
         return heap[0];
     }
 
+    //Method to remove min value
     public void removeMin() {
         if (size == 0)
             return;
@@ -101,13 +111,16 @@ class MinHeap {
         minHeapify(0);
     }
 
+
     public int getSize() {
         return size;
     }
 
+    //Method to check heap tree is empty
     public boolean isEmpty() {
         return size == 0;
     }
+
 
     public Appointment peekMin() {
         if (size == 0)
@@ -115,6 +128,7 @@ class MinHeap {
         return heap[0];
     }
 
+    //Method to upcoming view appointments
     public Appointment viewAppointments() {
         MinHeap tempHeap = new MinHeap();
         tempHeap.size = size;
@@ -172,11 +186,11 @@ public class Appointmentsch {
                     int scheduledTime = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
 
-                    minHeap.insert(new Appointment(name, scheduledDateStr, scheduledTime));
+                    minHeap.insert(new Appointment(name, scheduledDateStr, scheduledTime)); //calling insertion function
                     break;
 
                 case 2:  
-                    minHeap.viewAppointments();
+                    minHeap.viewAppointments(); //calling view appointments function
                     Appointment firstAppointment = minHeap.getMin();
                     if (firstAppointment != null) {
                         System.out.println("Next Appointment is to "+firstAppointment.name+" at "+firstAppointment.scheduledDate+" "+firstAppointment.scheduledTime);
@@ -191,9 +205,9 @@ public class Appointmentsch {
                     boolean removed = false;
                     for (int i = 0; i < minHeap.getSize(); i++) {
                         if (minHeap.heap[i].name.equals(nameToRemove)) {
-                            minHeap.heap[i] = minHeap.heap[minHeap.getSize() - 1];
+                            minHeap.heap[i] = minHeap.heap[minHeap.getSize() - 1];//the removed appointment is replaced by last appointment 
                             minHeap.size--;
-                            minHeap.minHeapify(i);
+                            minHeap.minHeapify(i);//call this to maintain min heap
                             removed = true;
                             break;
                         }

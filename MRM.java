@@ -184,12 +184,12 @@ public class MRM {
         System.out.println("\nMenu:");
         System.out.println("1. Add Medical Record");
         System.out.println("2. Update Medical Record by Patient Name");
-        System.out.println("3. Search Medical Record by Timestamp");
-        System.out.println("4. Search Medical Record by Patient Name");
-        System.out.println("5. Display All Medical Records");
-        System.out.println("6. Delete Medical Record by Patient Name");
-        System.out.println("7. main menu");
-        System.out.println("8. exit");
+      //  System.out.println("3. Search Medical Record by Timestamp");
+        System.out.println("3. Search Medical Record by Patient Name");
+        System.out.println("4. Display All Medical Records");
+        System.out.println("5. Delete Medical Record by Patient Name");
+        System.out.println("6. main menu");
+        System.out.println("7. exit");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
         scanner.nextLine(); // Consume newline
@@ -199,7 +199,7 @@ public class MRM {
                 // Accepting user input for adding medical records
                 System.out.println(
                         "\nEnter Medical Record details (Timestamp, Patient, Doctor, Diagnosis, Prescription):");
-                System.out.print("Timestamp: ");
+                System.out.print("Date(dd/mm/yyyy): ");
                 String timestamp = scanner.nextLine();
                 System.out.print("Patient: ");
                 String patient = scanner.nextLine();
@@ -231,9 +231,10 @@ public class MRM {
                 System.out.println("Medical Record updated successfully.");
                 break;
 
-            case 3:
+            /*case 3:
                 // Searching for a medical record by timestamp
-                System.out.print("\nEnter the timestamp of the medical record to search: ");
+              
+            
                 String timestampToSearch = scanner.nextLine();
                 MedicalRecord foundRecordByTimestamp = recordBST.searchRecord(timestampToSearch);
                 if (foundRecordByTimestamp != null) {
@@ -246,9 +247,9 @@ public class MRM {
                 } else {
                     System.out.println("Medical Record not found.");
                 }
-                break;
+                break; */
 
-            case 4:
+            case 3:
                 // Searching for medical records by patient name
                 System.out.print("\nEnter the patient name to search for medical records: ");
                 String patientNameToSearch = scanner.nextLine();
@@ -265,12 +266,12 @@ public class MRM {
                 }
                 break;
 
-            case 5:
+            case 4:
                 // Displaying all medical records
                 recordBST.retrieveRecords();
                 break;
 
-            case 6:
+            case 5:
                 // Deleting a medical record by patient name
                 System.out.print("\nEnter the patient name of the medical record to delete: ");
                 String patientNameToDelete = scanner.nextLine();
@@ -278,13 +279,13 @@ public class MRM {
                 System.out.println("Medical Record deleted successfully.");
                 break;
 
-            case 7:
+            case 6:
                 // Enter main menu
                 Main main = new Main();
                 main.main();
                 break;
 
-                case 8:
+                case 7:
                 // Exiting the program
                 System.out.println("Exiting the program.");
                 System.exit(0);

@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 
 class BillingInfo {
@@ -84,13 +83,41 @@ class BillingLinkedList {
     private int generateUniqueBillID() {
         return (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
     }
-}
 
-public class billing {
-    public static void Billing() {
-        BillingLinkedList billingList = new BillingLinkedList();
-        Scanner scanner = new Scanner(System.in);
+    public void performBillingOperations(Scanner scanner) {
+        // Display initial billing information
+        System.out.println("Initial Billing Information:");
+        displayBillingInfo();
 
+        // Ask user for operations
+        System.out.println("Choose an option:");
+        System.out.println("1. Add new bill");
+        System.out.println("2. Track payment");
+        System.out.println("3. Update billing information");
+        System.out.print("Enter the option number: ");
+        int option = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        switch (option) {
+            case 1:
+                addNewBill(scanner);
+                break;
+            case 2:
+                trackPayment(scanner);
+                break;
+            case 3:
+                updateBillingInfo(scanner);
+                break;
+            default:
+                System.out.println("Invalid option");
+        }
+
+        // Display updated billing information
+        System.out.println("Updated Billing Information:");
+        displayBillingInfo();
+    }
+
+    private void addNewBill(Scanner scanner) {
         // Get user inputs for generating bills
         System.out.print("Enter patient name for the bill: ");
         String patientName = scanner.nextLine();
@@ -99,50 +126,44 @@ public class billing {
         double amount = scanner.nextDouble();
         scanner.nextLine(); // Consume the newline character
 
-        billingList.generateBill(patientName, amount);
+        generateBill(patientName, amount);
+        System.out.println("Bill added successfully.");
 
-        // Display initial billing information
-        System.out.println("Initial Billing Information:");
-        billingList.displayBillingInfo();
+        // Ask user if they want to perform another operation
+        System.out.print("Do you want to perform another operation? (YES/NO): ");
+        String continueOption = scanner.nextLine().toUpperCase();
 
-        // Get user input for tracking payment
-        System.out.print("Do you want to track payment for a bill? (YES/NO): ");
-        String trackPaymentOption = scanner.nextLine().toUpperCase();
-
-        if ("YES".equals(trackPaymentOption)) {
-            System.out.print("Enter the Bill ID to track payment: ");
-            int paymentBillID = scanner.nextInt();
-            billingList.trackPayment(paymentBillID);
+        if ("YES".equals(continueOption)) {
+            performBillingOperations(scanner); // Navigate to another operation
         }
-        else{
-            Main main = new Main();
-            main.main();   
-        }
+    }
 
-        // Get user input for updating billing information
-        System.out.print("Do you want to update billing information? (YES/NO): ");
-        String updateBillingOption = scanner.next().toUpperCase();
+    private void trackPayment(Scanner scanner) {
+        System.out.print("Enter the Bill ID to track payment: ");
+        int paymentBillID = scanner.nextInt();
+        trackPayment(paymentBillID);
+        System.out.println("Payment for Bill ID " + paymentBillID + " has been tracked.");
+    }
 
-        if ("YES".equals(updateBillingOption)) {
-            System.out.print("Enter the Bill ID to update billing information: ");
-            int updateBillID = scanner.nextInt();
+    private void updateBillingInfo(Scanner scanner) {
+        System.out.print("Enter the Bill ID to update billing information: ");
+        int updateBillID = scanner.nextInt();
 
-            System.out.print("Enter the new amount: ");
-            double newAmount = scanner.nextDouble();
-            scanner.nextLine(); // Consume the newline character
+        System.out.print("Enter the new amount: ");
+        double newAmount = scanner.nextDouble();
+        scanner.nextLine(); // Consume the newline character
 
-            billingList.updateBillingInfo(updateBillID, newAmount);
-            Main main = new Main();
-            main.main();   
-        }
-        else{
-            Main main = new Main();
-            main.main();   
-        }
+        updateBillingInfo(updateBillID, newAmount);
+        System.out.println("Billing information for Bill ID " + updateBillID + " has been updated.");
+    }
+}
 
-        // Display updated billing information
-        System.out.println("Updated Billing Information:");
-        billingList.displayBillingInfo();
+public class billing {
+    public static void Billing() {
+        BillingLinkedList billingList = new BillingLinkedList();
+        Scanner scanner = new Scanner(System.in);
+
+        billingList.performBillingOperations(scanner);
 
         // Close the scanner
         scanner.close();

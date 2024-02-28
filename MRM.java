@@ -98,7 +98,7 @@ class MedicalRecordBST {
 
     // Retrieve and display medical records based on patient names
     public void retrieveRecords() {
-        inorderTraversal(root);
+        inorderTraversal(root);  //left,root,rght
     }
 
     private void inorderTraversal(Node root) {
@@ -176,6 +176,7 @@ class MedicalRecordBST {
             root = root.left;
         }
         return minValue;
+        //It is used to find the in-order successor during the deletion process.
     }
 }
 

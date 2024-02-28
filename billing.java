@@ -94,6 +94,7 @@ class BillingLinkedList {
         System.out.println("1. Add new bill");
         System.out.println("2. Track payment");
         System.out.println("3. Update billing information");
+        System.out.println("4. Main Menu");
         System.out.print("Enter the option number: ");
         int option = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
@@ -108,6 +109,11 @@ class BillingLinkedList {
             case 3:
                 updateBillingInfo(scanner);
                 break;
+            case 4:
+            Main main = new Main();
+            main.main();    
+            break;
+
             default:
                 System.out.println("Invalid option");
         }
@@ -136,6 +142,10 @@ class BillingLinkedList {
         if ("YES".equals(continueOption)) {
             performBillingOperations(scanner); // Navigate to another operation
         }
+        else if("NO".equals(continueOption)){
+            Main main = new Main();
+            main.main();  
+        }
     }
 
     private void trackPayment(Scanner scanner) {
@@ -143,6 +153,8 @@ class BillingLinkedList {
         int paymentBillID = scanner.nextInt();
         trackPayment(paymentBillID);
         System.out.println("Payment for Bill ID " + paymentBillID + " has been tracked.");
+        Main main = new Main();
+            main.main();
     }
 
     private void updateBillingInfo(Scanner scanner) {

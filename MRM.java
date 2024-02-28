@@ -78,6 +78,8 @@ class MedicalRecordBST {
 
         if (compareResult < 0) {
             root.left = updateRec(root.left, patientName, newDoctorName, newDiagnosis, newPrescription);
+            //If compareResult is less than 0, it means patientName is 
+            //lexicographically less than the current node's patient name. The code in the first block is executed.
         } else if (compareResult > 0) {
             root.right = updateRec(root.right, patientName, newDoctorName, newDiagnosis, newPrescription);
         } else {
@@ -85,6 +87,10 @@ class MedicalRecordBST {
             root.record.doctorName = newDoctorName;
             root.record.diagnosis = newDiagnosis;
             root.record.prescription = newPrescription;
+
+            //If compareResult is equal to 0,
+            // it means patientName is equal to the current node's patient name. 
+            //The code in the third block is executed.
         }
 
         return root;

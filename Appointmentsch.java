@@ -2,6 +2,8 @@
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+
 
 class Appointment {
     String name;
@@ -137,19 +139,32 @@ class MinHeap {
             tempHeap.heap[i] = heap[i];
         }
     
+        LocalDate currentDate = LocalDate.now();
+        int currentTime = Integer.parseInt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HHmm")));
+    
         System.out.println("Upcoming Appointments:");
         Appointment nextAppointment = null;
         while (!tempHeap.isEmpty()) {
             nextAppointment = tempHeap.getMin();
-            System.out.println(nextAppointment.name + " has appointment at " +
-                    nextAppointment.scheduledDate + " " + nextAppointment.scheduledTime);
+            LocalDate appointmentDate = LocalDate.parse(nextAppointment.scheduledDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            int appointmentTime = nextAppointment.scheduledTime;
+    
+            // Check if the appointment is in the future
+            if (appointmentDate.isAfter(currentDate) || 
+                (appointmentDate.equals(currentDate) && appointmentTime >= currentTime)) {
+                System.out.println(nextAppointment.name + " has appointment at " +
+                                   nextAppointment.scheduledDate + " " + nextAppointment.scheduledTime);
+            }
+            
             tempHeap.removeMin();
         }
         return heap[0];
     }
     
+    }
     
-}
+
+
 
 public class Appointmentsch {
     public static void PatientAppoimentManagment() {
@@ -193,11 +208,42 @@ public class Appointmentsch {
                     minHeap.viewAppointments(); //calling view appointments function
                     Appointment firstAppointment = minHeap.getMin();
                     if (firstAppointment != null) {
-                        System.out.println("Next Appointment is to "+firstAppointment.name+" at "+firstAppointment.scheduledDate+" "+firstAppointment.scheduledTime);
+                        // Get the current date and time
+                        LocalDate currentDate = LocalDate.now();
+                        int currentTime = Integer.parseInt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HHmm")));
+
+                        int minTimeDifference = Integer.MAX_VALUE; // Initialize to a large value
+                        Appointment nextAppointment = null;
+
+                        // Iterate through the heap to find the next appointment after the current time
+                        for (int i = 0; i < minHeap.getSize(); i++) {
+                            Appointment currentAppointment = minHeap.heap[i];
+                            LocalDate appointmentDate = LocalDate.parse(currentAppointment.scheduledDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                            int appointmentTime = currentAppointment.scheduledTime;
+
+                            // Calculate the time difference between the current appointment and the current time
+                            int timeDifference;
+                            if (appointmentDate.isAfter(currentDate) || (appointmentDate.equals(currentDate) && appointmentTime >= currentTime)) {
+                                timeDifference = (appointmentDate.getDayOfMonth() - currentDate.getDayOfMonth()) * 24 * 60 + (appointmentTime / 100 * 60 + appointmentTime % 100) - (currentTime / 100 * 60 + currentTime % 100);
+
+                                if (timeDifference < minTimeDifference) {
+                                    minTimeDifference = timeDifference;
+                                    nextAppointment = currentAppointment;
+                                }
+                            }
+                        }
+
+                        if (nextAppointment != null) {
+                            System.out.println("Next Appointment is to " + nextAppointment.name + " at " + nextAppointment.scheduledDate + " " + nextAppointment.scheduledTime);
+                        } else {
+                            System.out.println("No upcoming appointments.");
+                        }
                     } else {
                         System.out.println("No upcoming appointments.");
                     }
                     break;
+
+
 
                 case 3:
                     System.out.print("Enter Name of Appointment to Remove: ");
